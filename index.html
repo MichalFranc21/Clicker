@@ -75,7 +75,7 @@
 
 <body>
     <script>
-        let body = document.querySelector("body");
+let body = document.querySelector("body");
 let score = 0;
 let level = 1;
 let koeficient = 1.1;
@@ -116,9 +116,7 @@ scoreButton.addEventListener("click", (e) => {
 
     setTimeout(() => {
         body.removeChild(value);
-    }, 1000);
-
-    
+    }, 1000); 
 });
 
 levelButton.addEventListener("click", (e) => {
@@ -157,17 +155,17 @@ levelButton.addEventListener("click", (e) => {
         boostButton.textContent = "10x"
         body.appendChild(boostButton)
         boostButton.addEventListener("click", (e) => {
-        score = score + boost
-        scoreParagraph.textContent = `Tvoje skóre: ${Math.floor(score)}`;
+            score = score + boost
+            scoreParagraph.textContent = `Tvoje skóre: ${Math.floor(score)}`;
 
-        let value = document.createElement("span");
-        value.className = "cursor-text";
-        value.textContent = `+${level}`;
-        body.appendChild(value);
+            let value = document.createElement("span");
+            value.className = "cursor-text";
+            value.textContent = `+${level}`;
+            body.appendChild(value);
 
-        setTimeout(() => {
-        body.removeChild(boostButton);
-        }, 15000);
+            setTimeout(() => {
+            body.removeChild(boostButton);
+            }, 15000);
 
         })
     }
