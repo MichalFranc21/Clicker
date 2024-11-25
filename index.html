@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-size: 50px;
+            color: white;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            text-shadow: 1px 1px 1px black;
+        }
+
+        html {
+            align-items: center;
+            background-color: black;
+        }
+
+        body {
+            margin: 80px auto;
+            margin-bottom: 0;
+            height: 80vh;
+            width: 1040px;
+            padding: 25px;
+            background-color: #f1a254d2;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        button {
+            width: 350px;
+            background-color: rgb(56, 56, 56);
+            color: white;
+            text-transform: uppercase;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 0 10px;
+        }
+
+        #alert {
+            background-color: white;
+            border-radius: 10px;
+            width: 800px;
+            margin: 30px auto;
+            padding: 10px;
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+        }
+
+        .cursor-text {
+            position: absolute;
+            animation: fadeOut .4s forwards;
+            margin-left: -35px;
+            margin-top: -20px;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+    <title>Clicker</title>
+</head>
+
+<body>
+    <script>
+        let body = document.querySelector("body");
+let score = 0;
+let level = 1;
+let koeficient = 1.1;
+let target = 10;
+let maxLevel = 20;
+
+let heading = document.createElement("h1");
+heading.textContent = `Dostaň se do levelu ${maxLevel}`;
+heading.style.textTransform = "uppercase";
+body.appendChild(heading);
+
+let levelParagraph = document.createElement("p");
+levelParagraph.textContent = `Level: ${level} - Získej ${Math.floor(level * target)}`;
+body.appendChild(levelParagraph);
+
+let scoreButton = document.createElement("button");
+scoreButton.textContent = "Klikni";
+scoreButton.id = "scoreButton";
+body.appendChild(scoreButton);
+
+let levelButton = document.createElement("button");
+levelButton.textContent = "Další level";
+body.appendChild(levelButton);
+
+let scoreParagraph = document.createElement("p");
+scoreParagraph.textContent = `Tvoje skóre: ${Math.floor(score)}`;
+body.appendChild(scoreParagraph);
+
+scoreButton.addEventListener("click", (e) => {
+    score += 1 * level;
+    scoreParagraph.textContent = `Tvoje skóre: ${Math.floor(score)}`;
+    
+    let value = document.createElement("span");
+    value.className = "cursor-text";
+    value.textContent = `+${level}`;
+    body.appendChild(value);
+
+    setTimeout(() => {
+        body.removeChild(value);
+    }, 1000);
+});
+
+levelButton.addEventListener("click", (e) => {
+    let alert = document.createElement("p");
+    scoreParagraph.appendChild(alert);
+    if (score >= target * level) {
+        score -= target * level;
+        scoreParagraph.textContent = `Tvoje skóre: ${Math.floor(score)}`;
+        level += 1;
+        target *= koeficient;
+        levelParagraph.textContent = `Level: ${level} - Získej ${Math.floor(level * target)}`;
+    } else {
+        alert.id = "alert";
+        alert.textContent = ` Nemáš dostatečné skóre!`;
+        alert.style.color = "black";   
+    }
+
+    if (level === maxLevel) {
+        body.removeChild(heading);
+        body.removeChild(scoreButton);
+        body.removeChild(levelButton);
+        body.removeChild(scoreParagraph);
+        levelParagraph.textContent = "Vyhrál jsi :)";
+        levelParagraph.style.marginTop = "150px";
+
+        let refreshButton = document.createElement("button");
+        refreshButton.textContent = "Hrát znovu";
+        body.appendChild(refreshButton);
+        refreshButton.addEventListener("click", (e) => {
+            location.reload();
+        });
+    }
+});
+    </script>
+</body>
+
+</html>
