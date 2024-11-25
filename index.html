@@ -34,7 +34,7 @@
             background-color: rgb(56, 56, 56);
             color: white;
             text-transform: uppercase;
-            padding: 10px;
+            padding: 0 10px;
             border-radius: 10px;
             margin: 0 10px;
         }
@@ -81,6 +81,7 @@ let level = 1;
 let koeficient = 1.1;
 let target = 10;
 let maxLevel = 20;
+let boost = level
 
 let heading = document.createElement("h1");
 heading.textContent = `Dostaň se do levelu ${maxLevel}`;
@@ -116,6 +117,8 @@ scoreButton.addEventListener("click", (e) => {
     setTimeout(() => {
         body.removeChild(value);
     }, 1000);
+
+    
 });
 
 levelButton.addEventListener("click", (e) => {
@@ -147,6 +150,26 @@ levelButton.addEventListener("click", (e) => {
         refreshButton.addEventListener("click", (e) => {
             location.reload();
         });
+    }
+
+    if (level === 10) {
+        let boostButton = document.createElement("button")
+        boostButton.textContent = "10x"
+        body.appendChild(boostButton)
+        boostButton.addEventListener("click", (e) => {
+        score = score + boost
+        scoreParagraph.textContent = `Tvoje skóre: ${Math.floor(score)}`;
+
+        let value = document.createElement("span");
+        value.className = "cursor-text";
+        value.textContent = `+${level}`;
+        body.appendChild(value);
+
+        setTimeout(() => {
+        body.removeChild(boostButton);
+        }, 15000);
+
+        })
     }
 });
     </script>
